@@ -59,7 +59,7 @@ int main(int argc,char* argv[])
 		printf("\nmiss argv!  please append with netname1 and netname2.\n");
 		exit(0);
 	}
-	printf("\n本程序作者: 吴壮\n修改: 周洪鑫\n");
+	printf("\n本程序作者: 吴壮\n修改: 周洪鑫、张伯寅\n");
 	 
 
 
@@ -69,6 +69,7 @@ int main(int argc,char* argv[])
 
 	fd1=socket(PF_PACKET,SOCK_RAW,htons(ETH_P_ALL));
 	struct sockaddr_ll dest1;
+
 	struct ifreq ifstruct1;
 	strncpy(ifstruct1.ifr_name,argv[1],IFNAMSIZ);		//	第二个参数为路由器连接电脑的网卡名
 	ioctl(fd1,SIOCGIFINDEX,&ifstruct1);
@@ -390,35 +391,7 @@ int main(int argc,char* argv[])
 	close(fd2);
 	return 0;
 }
-/*unsigned char trans(unsigned char value)		//	锐捷混淆算法对照表,锐捷的工程师也搞不出什么新花样
-{
-	switch (value)
-	{
-	case 0x00:return 0x0f;		//	0<--->f
-	case 0x01:return 0x07;		//	1<--->7
-	case 0x02:return 0x0b;		//	2<--->b
-	case 0x03:return 0x03;		//	3<--->3
-	case 0x04:return 0x0d;		//	4<--->d
-	case 0x05:return 0x05;		//	5<--->5
-	case 0x06:return 0x09;		//	6<--->9
-	case 0x07:return 0x01;		//	7<--->1
-	case 0x08:return 0x0e;		//	8<--->e
-	case 0x09:return 0x06;		//	9<--->6
-	case 0x0a:return 0x0a;		//	a<--->a
-	case 0x0b:return 0x02;		//	b<--->2
-	case 0x0c:return 0x0c;		//	c<--->c
-	case 0x0d:return 0x04;		//	d<--->4
-	case 0x0e:return 0x08;		//	e<--->8
-	case 0x0f:return 0x00;		//	f<--->0
-	}
-};
-unsigned char getvalue(unsigned char value)		//	加密和解密是一个算法,x=f(f(x))
-{
-	unsigned char h = (value & 0xf0) >> 4;
-	unsigned char l = value & 0x0f;
-	return (trans(h) << 4) | trans(l);
-};
-*/
+
 void calvalue1(unsigned char value[4]) {		//心跳包第一段增加
 	unsigned char signalvalue1 = value[0];
 	unsigned char signalvalue2 = value[1];
